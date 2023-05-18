@@ -1,0 +1,234 @@
+12 FEB 2023 TASKS:
+
+1) CODE:
+
+echo "enter file name: \c"
+read file
+echo "enter word: \c"
+read word
+echo "file before removing $word : \c"
+cat $file
+grep -v -i $word $file > test
+mv test $file
+echo "file after removing $word : \c"
+cat $file
+
+
+OUTPUT:
+
+enter file name: /home/akhil/sample.txt
+enter word: hello
+file before removing hello : 
+hello there
+i am akhil       
+hello everyone
+my emp code is MLIXXXX
+file after removing hello : 
+i am akhil       
+my emp code is MLIXXXX
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2) CODE:
+
+#!/bin/bash
+echo -n "Enter the path of the directory: \c "
+read dir_path
+if [ ! -d "$dir_path" ]; then
+  echo "The directory $dir_path does not exist: \c"
+  exit 1
+fi
+echo "Files in $dir_path: \c"
+ls "$dir_path"
+
+OUTPUT:
+
+Enter the path of the directory: /home/akhil/shellscrpting/abc
+Files in /home/akhil/shellscrpting/abc: file1  file2  file3
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+3) CODE:
+
+#!/bin/bash
+THRESHOLD=90
+mailto="root"
+HOSTNAME=$(hostname)
+
+for path in `/bin/df -h | grep -vE 'Filesystem|tmpfs' | awk '{print $5}' | sed 's/%//g'`
+
+do
+     if [ $path -ge $THRESHOLD ] ; then
+     df -h | grep $path% >> /tmp/temp
+     fi
+done
+
+VALUE=`cat /tmp/temp | wc -l`
+        if [ $VALUE -ge 1 ] ; then
+        mail -s "$HOSTNAME Disk Usage is Critical" $mailto < /tmp/temp
+        fi
+
+rm -rf /tmp/temp
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+4) CODE:
+
+#!/bin/bash
+req_tom_ver="9.0.27"
+tom_m_v=$(echo $req_tom_ver|cut -c 1)
+url="https://archive.apache.org/dist/tomcat/tomcat-${tom_m_v}/v${req_tom_ver}/bin/apache-tomcat-${req_tom_ver}.tar.gz"
+wget $url
+tar xvf apache-tomcat-${req_tom_ver}.tar.gz
+mv apache-tomcat-${req_tom_ver} tomcat${tom_m_v}
+rm -rf apache-tomcat-${req_tom_ver}.tar.gz
+
+OUTPUT: 
+
+--2023-02-19 19:32:56--  https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.27/bin/apache-tomcat-9.0.27.tar.gz
+Resolving archive.apache.org (archive.apache.org)... 138.201.131.134, 2a01:4f8:172:2ec5::2
+Connecting to archive.apache.org (archive.apache.org)|138.201.131.134|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 10982406 (10M) [application/x-gzip]
+Saving to: ‘apache-tomcat-9.0.27.tar.gz’
+
+apache-tomcat-9.0.27.tar.gz             100%[===============================================================================>]  10.47M  1.84MB/s    in 7.3s    
+
+2023-02-19 19:33:04 (1.43 MB/s) - ‘apache-tomcat-9.0.27.tar.gz’ saved [10982406/10982406]
+
+#ls#                                                             
+tomcat9
+#cd tomcat9/ls#
+bin  BUILDING.txt  conf  CONTRIBUTING.md  lib  LICENSE  logs  NOTICE  README.md  RELEASE-NOTES  RUNNING.txt  temp  webapps  work
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+5) CODE:
+
+#!/bin/bash
+echo "enter first value : \c"
+read -r a
+echo "enter second value : \c"
+read -r b
+echo "sum of two numbers is `expr $a + $b`"
+echo "difference of two numbers is `expr $a - $b`"
+echo "product of two numbers is `expr $a \* $b`"
+
+OUTPUT:
+
+enter first value : 10
+enter second value : 20
+sum of two numbers is 30
+difference of two numbers is -10
+product of two numbers is 200
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+6) CODE:
+
+#!/bin/bash 
+ 
+echo "Enter the name of a month." 
+
+read month 
+
+case $month in 
+
+  February) 
+
+ echo "There are 28/29 days in $month.";; 
+
+  April | June | September | November) 
+
+echo "There are 30 days in $month.";; 
+
+  January | March | May | July | August | October | December) 
+
+echo "There are 31 days in $month.";; 
+
+  *) 
+
+echo "Unknown month. Please check if you entered the correct month name: $month";; 
+
+esac
+
+OUTPUT:
+Enter the name of a month.
+February
+There are 28/29 days in February.
+ 
+Enter the name of a month.
+January
+There are 31 days in January.
+
+Enter the name of a month.
+April
+There are 30 days in April.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+7) crontab -l
+ * * * * * echo "scheduling job" >> /tmp/sample
+30 10 * * 1 echo "scheduled succesfully" >> /tmp/cron.txt
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+8) SCRIPT DEBUGGING : THEORY
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+9) IF LOOP :
+
+#!/bin/bash
+echo "enter your age: \c"
+read -r age
+if [ $age -gt 18 ] ; then
+  echo "You are eligible to vote."
+fi
+
+OUTPUT: 
+
+enter your age: 25
+You are eligible to vote.
+
+IF ELSE LOOP:
+
+#!/bin/bash
+echo "enter your percentage: \c"
+read -r percentage
+if [ $percentage -ge 75 ]; then
+ echo "Congratulations and welcome onboard.Our team will get in touch with you shortly."
+else
+ echo "You are not selected.Better luck next time.!"
+fi
+
+OUTPUT: 
+
+enter your percentage: 75
+Congratulations and welcome onboard.Our team will get in touch with you shortly.
+ 
+enter your percentage: 60
+You are not selected.Better luck next time.!
+
+FOR LOOP:
+
+#!/bin/bash
+for i in {0..5}
+do
+   echo "Element $i"
+done
+
+OUTPUT:
+
+Element 0
+Element 1
+Element 2
+Element 3
+Element 4
+Element 5
+
+WHILE LOOP:
+
+#!/bin/bash
+n=1
+while [ $n -le 5 ]
+do
+    echo "Running $n time"
+    (( n++ ))
+done
+
+OUTPUT:
+
+Running 1 time
+Running 2 time
+Running 3 time
+Running 4 time
+Running 5 time
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
