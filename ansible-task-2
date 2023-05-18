@@ -1,0 +1,46 @@
+- name: installing phpmyadmin
+
+  hosts: n1
+
+  become: true
+
+  tasks:
+
+    - name: download phpmyadmin
+
+      get_url:
+
+        url: https://www.phpmyadmin.net/downloads/phpMyAdmin-latest-all-languages.tar.gz
+
+        dest: /var/www/html/phpmyadmin.tar.gz
+
+ 
+
+    - name: create phpMyAdmin directory
+
+      file:
+
+        path: /var/www/html/
+
+        state: directory
+
+
+    - name: deploying code to apache http root directory
+
+      hosts: n1
+
+      become: true
+
+      tasks:
+
+    - name: sending code to web server  root directory
+
+      copy:
+
+      src: /home/ec2-user/ecommerce
+
+      dest: /var/www/html
+
+      remote_src: yes
+
+
